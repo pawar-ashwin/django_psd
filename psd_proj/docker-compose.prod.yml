@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  web:
+    image: HW_proj
+    command: gunicorn psd_proj.wsgi:application -w 4 -k uvicorn.workers.UvicornWorker
+    volumes:
+      - ./psd_proj/static:/app/psd_proj/static
+    expose:
+      - "8000"
