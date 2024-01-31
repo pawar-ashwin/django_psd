@@ -1,0 +1,30 @@
+name: Docker Compose Testing
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      web:
+        image: HW_proj
+        ports:
+          - "8000:8000"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        run: docker-compose up -d
+
+      - name: Run tests
+        run: |
+          docker-compose exec web python manage.py test
+
+      - name: Tear down Docker Compose
+        run: docker-compose down
